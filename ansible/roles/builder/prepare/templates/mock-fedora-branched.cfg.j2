@@ -90,6 +90,12 @@ repo_gpgcheck=0
 enabled={{ repo_389ds_testing_enabled }}
 enabled_metadata=1
 
+[custom-abiagion-packages]
+name=FreeIPA PR CI testing packages
+baseurl=http://file.rdu.redhat.com/abiagion/fedora/repos/rpms
+enabled=1
+gpgcheck=0
+
 [group_pki-master]
 name=Copr repo for master owned by @pki
 baseurl=https://copr-be.cloud.fedoraproject.org/results/@pki/master/fedora-$releasever-$basearch/

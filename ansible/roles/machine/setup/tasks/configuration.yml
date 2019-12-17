@@ -38,3 +38,8 @@
 - name: configure 389-ds COPR repo (nightly)
   shell: "dnf copr enable -y @389ds/389-ds-base-nightly"
   when: repo_389ds_testing_enabled
+
+- name: add custom repository
+  get_url:
+    dest: /etc/yum.repos.d/
+    url: http://file.rdu.redhat.com/abiagion/fedora/repos/abiagion.repo
