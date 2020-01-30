@@ -239,8 +239,17 @@ class CloudUpload(FallibleTask):
 
         # run 2 awscli commands so we can upload all "gzip" files with
         # correct encoding.
-        self.execute_subtask(PopenTask(aws_sync_cmd + sync_all_except_gz))
-        self.execute_subtask(PopenTask(aws_sync_cmd + sync_gz))
+        # running twice as a quick and dirty to reduce the number of
+        # "Failed to publish artifacts" errors
+        try:
+            self.execute_subtask(PopenTask(aws_sync_cmd + sync_all_except_gz))
+        except Exception:
+            self.execute_subtask(PopenTask(aws_sync_cmd + sync_all_except_gz))
+
+        try:
+            self.execute_subtask(PopenTask(aws_sync_cmd + sync_gz))
+        except Exception:
+            self.execute_subtask(PopenTask(aws_sync_cmd + sync_gz))
 
 
 class CreateRootIndex(FallibleTask):
