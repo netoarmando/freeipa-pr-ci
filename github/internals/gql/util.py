@@ -58,8 +58,19 @@ def get_pull_requests(repository: Dict) -> List[Dict]:
 
 
 def get_last_commit(pull_request: Dict) -> Dict:
-    """Extracts last pull request from a given pull request."""
-    return pull_request["commits"]["nodes"][0]["commit"]
+    """Extracts last commit from a given pull request."""
+    commits = {}
+    parent_oids = set()
+
+    for commit in pull_request["commits"]["nodes"]:
+        commits[commit["commit"]["oid"]] = commit["commit"]
+        parent_oids.update(
+            node["oid"] for node in commit["commit"]["parents"]["nodes"]
+        )
+
+    tip_oid = next(iter(commits.keys() - parent_oids))
+
+    return commits[tip_oid]
 
 
 def get_commit_sha(commit: Dict) -> Text:
