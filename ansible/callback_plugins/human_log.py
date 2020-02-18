@@ -17,8 +17,10 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
+import importlib
 import sys
-reload(sys)
+
+importlib.reload(sys)
 sys.setdefaultencoding('utf-8')
 
 try:
