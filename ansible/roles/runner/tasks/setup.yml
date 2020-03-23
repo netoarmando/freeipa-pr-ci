@@ -19,6 +19,8 @@
   dnf:
     state: present
     name:
+      - cronie
+      - crontabs
       - tuned
       - vagrant
       - vagrant-sshfs
@@ -37,10 +39,8 @@
       - python3-devel
       - python3-pip
       - python3-winrm
-      - python2-winrm
       - python3-netaddr
       - python2-netaddr
-      - python2-requests
       - python3-requests
       - NetworkManager
       - python3-dnf
