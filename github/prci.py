@@ -106,6 +106,8 @@ def process_pull_request(
         logger.error(e)
         return None
 
+    logger.info('PR#{} - No error in yaml'.format(pull_request.number))
+
     if pull_request.needs_rerun:
         # If all statuses are not failed (not in state ERROR or FAILURE) and
         # re-run label was set previously, remove the re-run label
@@ -120,6 +122,7 @@ def process_pull_request(
                 logger.warning(e)
 
     for name, task_data in tasks_data.items():
+        logger.info('PR#{} - task: {}'.format(pull_request.number, name))
         try:
             task = Task(
                 name, pull_request.number, pull_request.commit.sha,
@@ -216,18 +219,18 @@ def process_task(
         "Attempting to lock a task %s for PR#%s.",
         task.name, task.pr_number
     )
-    try:
-        task.lock(world)
-    except EnvironmentError as e:
-        logger.warning(e)
-        return None
+    # try:
+    #     task.lock(world)
+    # except EnvironmentError as e:
+    #     logger.warning(e)
+    #     return None
 
-    logger.info(
-        "%s PR#%s is successfully locked.",
-        task.name, task.pr_number
-    )
+    # logger.info(
+    #     "%s PR#%s is successfully locked.",
+    #     task.name, task.pr_number
+    # )
 
-    return task
+    # return task
 
 
 def main():
