@@ -31,6 +31,14 @@
     state: latest
   when: update_packages is defined and update_packages
 
+- name: get enabled repos
+  shell: dnf repolist --enabled
+  register: out
+
+- name: print list of enabled repos
+  debug: 
+    var: out.stdout_lines
+
 - name: install freeipa packages
   dnf:
     state: latest
